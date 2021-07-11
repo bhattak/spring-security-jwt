@@ -27,17 +27,9 @@ public class HRAdmin {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-
 	private String name;
-	
-
 	private String username;
-	
-
 	private String email;
-	
-
 	private String password;
 
 	@ManyToMany(fetch = FetchType.LAZY)
