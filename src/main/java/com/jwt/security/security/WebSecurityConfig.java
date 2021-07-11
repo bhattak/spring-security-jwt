@@ -23,56 +23,55 @@ import com.jwt.security.security.services.UserDetailsServiceImpl;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private UserDetailsServiceImpl userDetailsService;
-	@Autowired
-	private JwtAuthEntryPoint unauthorizedHandler;
-	@Autowired
-	private JwtAuthTokenFilter jwtAuthTokenFilter;
-	
-//	public WebSecurityConfig(UserDetailsServiceImpl userDetailsService) {
-//		this.userDetailsService=userDetailsService
-//	}
+    private UserDetailsServiceImpl userDetailsService;
+    private JwtAuthEntryPoint unauthorizedHandler;
+    private JwtAuthTokenFilter jwtAuthTokenFilter;
 
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-	}
+    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, JwtAuthEntryPoint unauthorizedHandler, JwtAuthTokenFilter jwtAuthTokenFilter) {
+        this.userDetailsService = userDetailsService;
+        this.unauthorizedHandler = unauthorizedHandler;
+        this.jwtAuthTokenFilter = jwtAuthTokenFilter;
+    }
 
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    }
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http
-				.cors()
-				.and()
-				.csrf()
-				.disable()
-				.authorizeRequests()
-				.antMatchers("/auth/**").permitAll()
-				.antMatchers("/esewa/**").hasRole("HRADMIN")
-				.antMatchers("/f1soft/**").hasRole("HRADMIN")
-				.antMatchers("/cogenthealth/**").hasRole("HRADMIN")
-				.anyRequest()
-				.authenticated()
-				.and()
-				.exceptionHandling()
-				.authenticationEntryPoint(unauthorizedHandler)
-				.and()
-				.sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
-		http
-				.addFilterBefore(jwtAuthTokenFilter,
-						UsernamePasswordAuthenticationFilter.class);
-	}
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .cors()
+                .and()
+                .csrf()
+                .disable()
+                .authorizeRequests()
+                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/esewa/**").hasRole("HRADMIN")
+                .antMatchers("/f1soft/**").hasRole("HRADMIN")
+                .antMatchers("/cogenthealth/**").hasRole("HRADMIN")
+                .anyRequest()
+                .authenticated()
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http
+                .addFilterBefore(jwtAuthTokenFilter,
+                        UsernamePasswordAuthenticationFilter.class);
+    }
 }

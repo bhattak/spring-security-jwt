@@ -22,10 +22,14 @@ import com.jwt.security.security.services.UserDetailsServiceImpl;
 @Service
 public class JwtAuthTokenFilter extends OncePerRequestFilter {
 	private static final Logger log = LoggerFactory.getLogger(JwtAuthTokenFilter.class);
-	@Autowired
+
 	private  JwtProvider tokenProvider;
-	@Autowired
 	private  UserDetailsServiceImpl userDetailsService;
+
+	public JwtAuthTokenFilter(JwtProvider tokenProvider, UserDetailsServiceImpl userDetailsService) {
+		this.tokenProvider = tokenProvider;
+		this.userDetailsService = userDetailsService;
+	}
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

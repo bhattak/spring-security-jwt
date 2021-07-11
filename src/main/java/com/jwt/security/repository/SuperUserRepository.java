@@ -11,7 +11,7 @@ import com.jwt.security.model.SuperUser;
 public interface SuperUserRepository extends CrudRepository<SuperUser, Integer> {
 	Optional<SuperUser> findByUsername(String username);
 	
-	public User findById(Integer id);
+	public Optional<SuperUser> findById(Integer id);
 
 	Boolean existsByUsername(String username);
 

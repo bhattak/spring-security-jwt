@@ -20,10 +20,13 @@ import com.jwt.security.repository.F1SoftRepository;
 @RequestMapping("/f1soft")
 @PreAuthorize("hasRole('HRADMIN')")
 public class F1SoftController {
-	
-	@Autowired
+
 	private F1SoftRepository f1SoftRepository;
-	
+
+	public F1SoftController(F1SoftRepository f1SoftRepository) {
+		this.f1SoftRepository = f1SoftRepository;
+	}
+
 	@GetMapping("/welcome")
 	public String Welcome() {
 		return "Welcome to F1Soft ...";

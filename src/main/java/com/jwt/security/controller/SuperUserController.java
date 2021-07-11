@@ -15,10 +15,13 @@ import com.jwt.security.repository.SuperUserRepository;
 @RequestMapping("/api/superuser/")
 @PreAuthorize("hasRole('SUPERUSER')")
 public class SuperUserController {
-	
-	@Autowired
+
 	private SuperUserRepository superUserRepository;
-	
+
+	public SuperUserController(SuperUserRepository superUserRepository) {
+		this.superUserRepository = superUserRepository;
+	}
+
 	@GetMapping("/welcome")
 	public String Welcome() {
 		return "WELCOME !!!";

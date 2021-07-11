@@ -19,10 +19,13 @@ import com.jwt.security.repository.EsewaRepository;
 @RequestMapping("/esewa")
 //@PreAuthorize("hasRole('HRADMIN')")
 public class EsewaController {
-	
-	@Autowired
+
 	private EsewaRepository esewaRepository;
-	
+
+	public EsewaController(EsewaRepository esewaRepository) {
+		this.esewaRepository = esewaRepository;
+	}
+
 	@GetMapping("/welcome")
 	public String Welcome() {
 		return "Welcome to Esewa !!!";

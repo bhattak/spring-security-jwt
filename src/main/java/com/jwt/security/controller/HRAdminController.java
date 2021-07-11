@@ -23,11 +23,16 @@ import com.jwt.security.repository.RoleRepository;
 @PreAuthorize("hasRole('SUPERUSER')")
 public class HRAdminController {
 
-	@Autowired
+
 	private HRAdminRepository hrAdminRepository;
-	@Autowired
+
 	private RoleRepository roleRepository;
-	
+
+	public HRAdminController(HRAdminRepository hrAdminRepository, RoleRepository roleRepository) {
+		this.hrAdminRepository = hrAdminRepository;
+		this.roleRepository = roleRepository;
+	}
+
 	@GetMapping("/welcome")
 	public String Welcome() {
 		return "Welcome to HRAdmin controller !!!";

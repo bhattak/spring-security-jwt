@@ -16,9 +16,11 @@ import com.jwt.security.repository.SuperUserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-	@Autowired
 	private SuperUserRepository superUserRepo;
-	
+
+	public UserDetailsServiceImpl(SuperUserRepository superUserRepo) {
+		this.superUserRepo = superUserRepo;
+	}
 
 	@Override
 	@Transactional

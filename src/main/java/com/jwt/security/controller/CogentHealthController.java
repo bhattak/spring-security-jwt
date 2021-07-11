@@ -20,14 +20,19 @@ import com.jwt.security.repository.CogentHealthRepository;
 //@PreAuthorize("hasRole('HRADMIN')")
 public class CogentHealthController {
 
-	@Autowired
 	private CogentHealthRepository cogentHealthRepository;
-	
+
+	public CogentHealthController(CogentHealthRepository cogentHealthRepository) {
+		this.cogentHealthRepository = cogentHealthRepository;
+	}
+
+
+
 	@GetMapping("/welcome")
 	public String Welcome() {
 		return "Welcome to Cogent Health ...";
 	}
-	
+
 
 	@PostMapping("/add")
 	public CogentHealth addEmployee(@RequestBody CogentHealth cg) {
