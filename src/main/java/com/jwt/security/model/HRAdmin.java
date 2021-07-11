@@ -28,16 +28,16 @@ public class HRAdmin {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column(nullable = false)
+
 	private String name;
 	
-	@Column(nullable = false)
+
 	private String username;
 	
-	@Column(nullable = false)
+
 	private String email;
 	
-	@Column(nullable = false)
+
 	private String password;
 
 	@ManyToMany(fetch = FetchType.LAZY)
